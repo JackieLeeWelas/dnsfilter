@@ -1,0 +1,25 @@
+<html>
+
+<head>
+<title>The domain name is dangerous</title>
+<script type="text/javascript" >
+	
+	alert("The domain name("+document.domain+") is forbidden to visit !");
+  	window.onload=function(){
+  	document.getElementById("dname").innerHTML=document.domain;
+  	}
+</script>
+
+</head>
+
+<body>
+<div style="text-align: center; font-size: 50px;">
+The domain name 
+<div id="dname" style="color:#F00"></div> 
+is dangerous !
+</div>
+
+</body>
+
+</html>
+

@@ -1,0 +1,93 @@
+<div style="width:1300px; margin-left:20px">
+<div style="float:left;width:500px" >
+<form id="blackdomain" name="blackdomain">
+	<h2>域名黑名单</h2>
+	域名 : <input id="domain" type="text" name="domain"><br/>
+	动作 :
+	<input type="radio" name="domain_action" checked value="search">查询
+	<input type="radio" name="domain_action" value="add">增加
+	<input type="radio" name="domain_action" value="remove">移除
+	
+	<input id="subform" type="Button" value="确定" onclick=SubblacklistForm();><br/>
+</form>
+</div>
+
+<div style="float:left;width:800px" >
+<form id="whitedomain" name="whitedomain">
+	<h2>域名白名单</h2>
+	域名 : <input id="domain" type="text" name="domain"><br/>
+	动作 :
+	<input type="radio" name="domain_action" checked value="search">查询
+	<input type="radio" name="domain_action" value="add">增加
+	<input type="radio" name="domain_action" value="remove">移除
+	
+	<input id="subform" type="Button" value="确定" onclick=SubwhitelistForm();><br/><br/>
+</form>
+</div>
+<br/><br/>
+</div>
+<div style="width:1300px; margin-left:20px">
+	<h2>设置DNS重定向服务器</h2>
+	当前IP : <input type="text" id="cur_DNSRedirect_ip" name="cur_DNSRedirect_ip" disabled="true" ><br/>
+	新&nbsp&nbsp&nbsp  IP : <input type="text" id="new_DNSRedirect_ip" name="new_DNSRedirect_ip">
+	<input id="setRedirect" type="Button" value="确定" onclick=setDNSRedirectIP();><br/>
+</div>
+
+<div style="height:300px;width:1300px; margin-left:20px">
+    <h2>基于交换机防护</h2>
+
+    <div style="width:400px;float:left;">
+        <h3>已开启防护的交换机</h3>
+    </div>
+
+    <div style="width:900px;float:left;">
+        <h3>未开启防护的交换机</h3>
+    </div>
+
+    <div style="height:200px;width:300px;float:left;border:1px solid #000">
+        <form id="enablelist" name="enablelist"></form>
+    </div>
+
+    <div style="height:200px;width:100px;float:left;text-align:center;">
+        <br/><br/><br/><br/>
+        <input type="submit" id="enablesw" name="enablesw" value="<----" onclick=enablesw()><br/>
+        <input type="submit" id="disablesw" name="disablesw" value="---->" onclick=disablesw()>
+    </div>
+
+    <div style="height:200px;width:300px;float:left;border:1px solid #000">
+        <form id="disablelist" name="disablelist"></form>
+    </div>
+</div>
+
+<div style="height:300px;width:1300px; margin-left:20px">
+    <h2>基于主机IP的防护 </h2>
+    <h3>已开启防护的主机IP</h3>
+    <div style="height:200px;width:300px;float:left;border:1px solid #000">
+        <form id="filterhostlist" name="filterhostlist"></form>
+    </div>
+
+    <div style="height:200px;width:100px;float:left;text-align:center;">
+        <input type="submit" id="addhost" name="addhost" value="<----" onclick=addfilterhost()><br/>
+        <input type="submit" id="removehost" name="removehost" value="---->" onclick=removefilterhost()>
+    </div>
+    
+    主机 IP : <input type="text" id="filterhost" name="filterhost" ><br/>
+    
+</div>
+
+<div style="height:300px;width:1300px; margin-left:20px">
+    <h2>基于主机MAC的防护 </h2>
+    <h3>已开启防护的主机MAC</h3>
+    <div style="height:200px;width:300px;float:left;border:1px solid #000">
+        <form id="filterhostmaclist" name="filterhostmaclist"></form>
+    </div>
+
+    <div style="height:200px;width:100px;float:left;text-align:center;">
+        <input type="submit" id="addhostmac" name="addhostmac" value="<----" onclick=addfilterhostmac()><br/>
+        <input type="submit" id="removehostmac" name="removehostmac" value="---->" onclick=removefilterhostmac()>
+    </div>
+    
+    主机 MAC : <input type="text" id="filterhostmac" name="filterhostmac" >
+    
+</div>
+

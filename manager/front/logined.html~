@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	 <link href="style.css" rel="stylesheet" type="text/css"/>
+    <meta charset="UTF-8">
+    <title>SDN 管理器</title>
+    <script type="text/javascript" src="./d3.v2.js"></script>
+    <script src="./common.js"></script>
+    <script src="../topology.js"></script>
+    <script>   	
+    	window.onload=function(){
+    		document.getElementById("Button1").onclick=GetSW;
+    		document.getElementById("Button2").onclick=GetHost;
+    		document.getElementById("Button3").onclick=GetFlow;
+    		document.getElementById("Button4").onclick=ManageFlow;  			
+    		document.getElementById("Button5").onclick=getTopology;
+    		document.getElementById("Button6").onclick=getDNSRecords;
+    		document.getElementById("Button7").onclick=ManageDNSFilter;
+		}		
+    </script>
+
+
+</head>
+
+<body>
+
+<div id="container">
+
+<div id="header">
+<h1 id="headertitle">SDN</h1>
+</div>
+
+<div id="menu">
+<h2>菜单</h2>
+<ul>
+
+<li><input class="button" id="Button1" type="button" value="交换机" /></li>
+<li><input class="button" id="Button2" type="button" value="主机" /></li>
+<li><input class="button" id="Button3" type="button" value="流表" /></li>
+<li><input class="button" id="Button4" type="button" value="管理流表" /></li>
+<li><input class="button" id="Button5" type="button" value="网络拓扑" /></li>
+<li><input class="button" id="Button6" type="button" value="域名过滤记录" /></li>
+<li><input class="button" id="Button7" type="button" value="恶意域名防护管理" /></li>
+</ul>
+
+
+</div>
+
+<div id="content" style="margin-left:20px">
+<h1>欢迎!</h1>
+<div id="formdiv"></div>
+<table id="testTbl" > </table> 
+
+</div>
+
+<div id="footer">ChongQing University</div>
+
+</div>
+
+</body>
+</html>
