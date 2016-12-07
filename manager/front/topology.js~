@@ -213,9 +213,7 @@ function getTopology(){
 
 	document.getElementById("content").innerHTML="";
 	topology=new Topology('content');
-	document.getElementById("headertitle").innerHTML="SDN: Topology";
-
-
+	document.getElementById("headertitle").innerHTML="SDN: 网络拓扑";
 
 	getswnodes(function (swnodes) {
 		//	alert(JSON.stringify(swnodes))
@@ -231,7 +229,7 @@ function getTopology(){
 			childNodes=hostnodes; 
 			childLinks=hostlinks;		
 			topology.addNodes(childNodes);
-    		topology.addLinks(childLinks);
+    		        topology.addLinks(childLinks);
 			topology.update();
 			});		
 	

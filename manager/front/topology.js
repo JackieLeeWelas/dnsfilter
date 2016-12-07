@@ -215,8 +215,6 @@ function getTopology(){
 	topology=new Topology('content');
 	document.getElementById("headertitle").innerHTML="SDN: 网络拓扑";
 
-
-
 	getswnodes(function (swnodes) {
 		//	alert(JSON.stringify(swnodes))
 		nodes=swnodes;
@@ -227,12 +225,12 @@ function getTopology(){
 			links=swlinks;
 			topology.addLinks(links);
 			gethostnodes(function (hostnodes,hostlinks){
-			//alert(JSON.stringify(hostnodes));
-			childNodes=hostnodes; 
-			childLinks=hostlinks;		
-			topology.addNodes(childNodes);
-    		topology.addLinks(childLinks);
-			topology.update();
+				//alert(JSON.stringify(hostnodes));
+				childNodes=hostnodes; 
+				childLinks=hostlinks;		
+				topology.addNodes(childNodes);
+	    		        topology.addLinks(childLinks);
+				topology.update();
 			});		
 	
 		});		

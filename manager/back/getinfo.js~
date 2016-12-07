@@ -38,6 +38,7 @@ exports.getinfo= function(res,req,pathname){
 		break;
 		case "/gethostmacfilterset":
 		readPath='/wm/dnsfilter/hostmacfilterset';
+                break;
 		default:
 			return;
 	}	

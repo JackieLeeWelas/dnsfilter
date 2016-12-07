@@ -27,6 +27,7 @@ exports.router =function(res,req,pathname){
 	case "/getswfilterset":
 	case "/getdnsredirectip":
 	case "/gethostfilterset":
+        case "/gethostmacfilterset":
 		getinfo.getinfo(res,req,pathname);
 	break;
 	case "/deletestaticflow":
