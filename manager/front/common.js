@@ -908,18 +908,14 @@ function FillFilterHostMacList(){
 		if(xhr.readyState==4){
 			if(xhr.status==200){
 				var MyObject = JSON.parse(xhr.responseText);
-				
-				for(var i=0;i<MyObject.length;i++){
-					
-					var enable_form = document.getElementById("filterhostmaclist");
-		            var Check = document.createElement("input");
-		            Check.name="filterhostmaccheckbox";
-		            alert(Check.name);
-		            Check.value=MyObject[i].host_mac;
-		            Check.type="checkbox";            
-		            enable_form.appendChild(Check);
-		            enable_form.innerHTML+=MyObject[i].host_mac+"<br/>";
-		           			
+				for(var i=0;i<MyObject.length;i++){	
+				    var enable_form = document.getElementById("filterhostmaclist");
+				    var Check = document.createElement("input");
+				    Check.name="filterhostmaccheckbox";
+				    Check.value=MyObject[i].host_mac;
+				    Check.type="checkbox";            
+				    enable_form.appendChild(Check);
+				    enable_form.innerHTML+=MyObject[i].host_mac+"<br/>";	
 				}		
 				}
 				
