@@ -680,7 +680,6 @@ public class DHCPServer implements IOFMessageListener, IFloodlightModule  {
 		DHCPACKPacket.setActions(actions);
 
 		DHCPACKPacket.setData(ethDHCPAck.serialize());
-
 		log.debug("Sending DHCP ACK");
 		sw.write(DHCPACKPacket.build());
 	}

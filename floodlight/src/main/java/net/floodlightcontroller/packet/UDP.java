@@ -1,7 +1,7 @@
 /**
-*    Copyright 2011, Big Switch Networks, Inc.
+*    Copyright 2011, Big Switch Networks, Inc. 
 *    Originally created by David Erickson, Stanford University
-*
+* 
 *    Licensed under the Apache License, Version 2.0 (the "License"); you may
 *    not use this file except in compliance with the License. You may obtain
 *    a copy of the License at
@@ -18,7 +18,6 @@
 package net.floodlightcontroller.packet;
 
 import java.nio.ByteBuffer;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,6 +32,7 @@ public class UDP extends BasePacket {
     public static Map<TransportPort, Class<? extends IPacket>> decodeMap;
     public static final TransportPort DHCP_CLIENT_PORT = TransportPort.of(68);
     public static final TransportPort DHCP_SERVER_PORT = TransportPort.of(67);
+    public static final TransportPort DNS_PORT = TransportPort.of(53);
     static {
         decodeMap = new HashMap<TransportPort, Class<? extends IPacket>>();
         /*
@@ -40,14 +40,16 @@ public class UDP extends BasePacket {
          */
         UDP.decodeMap.put(DHCP_CLIENT_PORT, DHCP.class);
         UDP.decodeMap.put(DHCP_SERVER_PORT, DHCP.class);
-
+        //将53端口与DNS类相关联
+        UDP.decodeMap.put(DNS_PORT, DNS.class);
+        
     }
 
     protected TransportPort sourcePort;
     protected TransportPort destinationPort;
     protected short length;
     protected short checksum;
-
+    
     /**
      * @return the sourcePort
      */
@@ -62,7 +64,7 @@ public class UDP extends BasePacket {
         this.sourcePort = sourcePort;
         return this;
     }
-
+    
     /**
      * @param sourcePort the sourcePort to set
      */
@@ -85,7 +87,7 @@ public class UDP extends BasePacket {
         this.destinationPort = destinationPort;
         return this;
     }
-
+    
     /**
      * @param destinationPort the destinationPort to set
      */
@@ -228,14 +230,6 @@ public class UDP extends BasePacket {
         this.destinationPort = TransportPort.of((int) (bb.getShort() & 0xffff)); // convert range 0 to 65534, not -32768 to 32767
         this.length = bb.getShort();
         this.checksum = bb.getShort();
-        // Grab a snapshot of the first four bytes of the UDP payload.
-        // We will use these to see if the payload is SPUD, without
-        // disturbing the existing byte buffer's offsets.
-        ByteBuffer bb_spud = bb.slice();
-        byte[] maybe_spud_bytes = new byte[SPUD.MAGIC_CONSTANT.length];
-        if (bb_spud.remaining() >= SPUD.MAGIC_CONSTANT.length) {
-            bb_spud.get(maybe_spud_bytes, 0, SPUD.MAGIC_CONSTANT.length);
-        }
 
         if (UDP.decodeMap.containsKey(this.destinationPort)) {
             try {
@@ -249,9 +243,6 @@ public class UDP extends BasePacket {
             } catch (Exception e) {
                 throw new RuntimeException("Failure instantiating class", e);
             }
-        } else if (Arrays.equals(maybe_spud_bytes, SPUD.MAGIC_CONSTANT)
-                && bb.remaining() >= SPUD.HEADER_LENGTH) {
-            this.payload = new SPUD();
         } else {
             this.payload = new Data();
         }

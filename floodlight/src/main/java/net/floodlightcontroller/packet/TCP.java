@@ -193,7 +193,7 @@ public class TCP extends BasePacket {
         bb.putShort(this.windowSize);
         bb.putShort(this.checksum);
         bb.putShort(this.urgentPointer);
-        if (dataOffset > 5) {
+        if (dataOffset > 5) { 
             int padding;
             bb.put(options);
             padding = (dataOffset << 2) - 20 - options.length;
