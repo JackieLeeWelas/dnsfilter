@@ -17,7 +17,7 @@ public class ClassifierTrainResource extends ClassifierResourceBase {
 	@Get("json")
     public Object handleRequest() {
          
-        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give trainfile and modelfile for train\"}";
+        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give trainfile for train\"}";
     }
 	
 	@Post
@@ -27,10 +27,9 @@ public class ClassifierTrainResource extends ClassifierResourceBase {
 			IClassifierService classifier=this.getClassifierService();
 			filename=this.jsonToFileEntry(json);
 			String trainfile =filename.get("trainfile").toString();
-			String modelfile =filename.get("modelfile").toString();
-			
-			if( classifier.train(trainfile, modelfile) != null){
-				return "{\"status\" : \"success\", \"details\" : SVM train model is saved in\""+modelfile+" \"}";
+			String modelfile = classifier.train(trainfile);
+			if( modelfile != null){
+				return "{\"status\" : \"success\", \"details\" : \"SVM train model is saved in " + modelfile + "\"}";
 			}else{
 				return "{\"status\" : \"failure\", \"details\" : \""+" SVM train is failed\"}";
 			}
@@ -67,9 +66,6 @@ public class ClassifierTrainResource extends ClassifierResourceBase {
 			switch (n) {
 				case "trainfile":
 					entry.put("trainfile", jp.getText());
-					break;
-				case "modelfile":
-					entry.put("modelfile", jp.getText());
 					break;
 				default:
 					throw new IOException("UnExpected FIELD_NAME"); 

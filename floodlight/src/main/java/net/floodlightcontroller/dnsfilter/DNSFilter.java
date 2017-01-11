@@ -224,7 +224,7 @@ public class DNSFilter implements IFloodlightModule, IOFMessageListener,IDNSFilt
             			return Command.CONTINUE;
             		}else{   //不在黑白名单的域名，根据分类器分类结果处理
             			double result = classifier.predict(dns_pkt.toString());
-            			if( result > 0) {
+            			if( result > 0) { //malicious domain name
             				processMaliciousDomain(sw,pi,cntx,decision,src,dst,dns_pkt.toString(),src_p,dst_p);
             			}else{
             				return Command.CONTINUE;

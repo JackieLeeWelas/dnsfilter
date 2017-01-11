@@ -16,7 +16,7 @@ public class ClassifierTestResource extends ClassifierResourceBase {
 	@Get("json")
     public Object handleRequest() {
          
-        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give testfile, modelfile and resultfile for test\"}";
+        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give testfile and modelfile for test\"}";
     }
 
 	@Post
@@ -27,10 +27,10 @@ public class ClassifierTestResource extends ClassifierResourceBase {
 			filename=this.jsonToFileEntry(json);
 			String testfile =filename.get("testfile").toString();
 			String modelfile =filename.get("modelfile").toString();
-			String resultfile =filename.get("resultfile").toString();
-			
-			if(classifier.test(testfile, modelfile, resultfile) != null){
-				return "{\"status\" : \"success\", \"details\" : SVM test result is saved in \""+resultfile+" \"}";
+			//String resultfile =filename.get("resultfile").toString();
+			String resultfile = classifier.test(testfile, modelfile);
+			if(resultfile != null){
+				return "{\"status\" : \"success\", \"details\" : \"SVM test result is saved in" + resultfile + "\"}";
 			}else{
 				return "{\"status\" : \"failure\", \"details\" : \""+" SVM test is failed\"}";
 			}
@@ -71,9 +71,9 @@ public class ClassifierTestResource extends ClassifierResourceBase {
 				case "modelfile":
 					entry.put("modelfile", jp.getText());
 					break;
-				case "resultfile":
-					entry.put("resultfile", jp.getText());
-					break;
+//				case "resultfile":
+//					entry.put("resultfile", jp.getText());
+//					break;
 				default:
 					throw new IOException("UnExpected FIELD_NAME"); 
 			}

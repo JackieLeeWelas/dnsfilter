@@ -16,7 +16,7 @@ public class ClassifierFeaturesResource extends ClassifierResourceBase {
 	@Get("json")
     public Object handleRequest() {
          
-        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give sourcefile and featurefile and label for extract features\"}";
+        return "{\"status\" : \"failure\", \"details\" : \"Use POST to give sourcefile and type and label for extract features\"}";
     }
 	
 	@Post
@@ -26,10 +26,12 @@ public class ClassifierFeaturesResource extends ClassifierResourceBase {
 			IClassifierService classifier=this.getClassifierService();
 			filename=this.jsonToFileEntry(json);
 			String sourcefile =filename.get("sourcefile").toString();
-			String featurefile =filename.get("featurefile").toString();
+			String type =filename.get("type").toString();
 			String label = filename.get("label").toString();
-			if( classifier.extractFeatures(sourcefile, featurefile, label) != null){
-				return "{\"status\" : \"success\", \"details\" : features extracted result is saved in\""+featurefile+" \"}";
+			
+			String featurefile = classifier.extractFeatures(sourcefile, type, label);
+			if( featurefile != null){
+				return "{\"status\" : \"success\", \"details\" : \" features extracted result is saved in "+featurefile+"\"}";
 			}else{
 				return "{\"status\" : \"failure\", \"details\" : \""+" features extracted is failed\"}";
 			}
@@ -67,8 +69,8 @@ public class ClassifierFeaturesResource extends ClassifierResourceBase {
 				case "sourcefile":
 					entry.put("sourcefile", jp.getText());
 					break;
-				case "featurefile":
-					entry.put("featurefile", jp.getText());
+				case "type":
+					entry.put("type", jp.getText());
 					break;
 				case "label":
 					entry.put("label", jp.getText());

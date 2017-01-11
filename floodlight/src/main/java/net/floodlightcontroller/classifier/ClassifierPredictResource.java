@@ -17,9 +17,9 @@ public class ClassifierPredictResource extends ClassifierResourceBase {
     	String domain = (String) getRequestAttributes().get("domain");
     	
     	if(predict.predict(domain) > 0){
-    		return "{\"status\" : \"Success\", \"predict result\" : \"***"+domain+"*** is predicted as malicious domain !\"}";
+    		return "{\"status\" : \"Success\", \"details\" : \" "+domain+" is predicted as malicious domain !\"}";
     	}else{
-    		return "{\"status\" : \"Success\", \"predict result\" : \"***"+domain+"*** is predicted as benign domain...\"}";
+    		return "{\"status\" : \"Success\", \"details\" : \" "+domain+" is predicted as benign domain...\"}";
     	}
     }
 }
