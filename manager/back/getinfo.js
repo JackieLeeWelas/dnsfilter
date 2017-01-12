@@ -38,7 +38,6 @@ exports.getinfo= function(res,req,pathname){
 		break;
 		case "/gethostmacfilterset":
 		readPath='/wm/dnsfilter/hostmacfilterset';
-                break;
 		default:
 			return;
 	}	
@@ -291,6 +290,139 @@ exports.setfilterhostmac = function(res,req){
 	});
 };
 
+//提取特征
+exports.feature= function(res,req){
+
+    var postData ="";
+    req.addListener("data",function(postDataChunk){
+        postData+=postDataChunk;
+    });
+    req.addListener("end",function(){
+
+        console.log(postData);
+
+        var options = {
+            host: MainIndex.getIP(),
+            port: MainIndex.getPORT(),
+            path: '/wm/classifier/feature',
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Content-Length': postData.length
+            }
+        };
+
+
+        getrestapi.GetRestAPI(postData,options,function(Sjson){
+            res.writeHead(200,{"Content-Type":"text/plain","Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"});
+            console.log(Sjson+'');
+            res.write(Sjson);
+
+            res.end();
+        });
+
+    });
+};
+
+//训练
+exports.train= function(res,req){
+
+    var postData ="";
+    req.addListener("data",function(postDataChunk){
+        postData+=postDataChunk;
+    });
+    req.addListener("end",function(){
+
+        console.log(postData);
+
+        var options = {
+            host: MainIndex.getIP(),
+            port: MainIndex.getPORT(),
+            path: '/wm/classifier/train',
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Content-Length': postData.length
+            }
+        };
+
+
+        getrestapi.GetRestAPI(postData,options,function(Sjson){
+            res.writeHead(200,{"Content-Type":"text/plain","Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"});
+            console.log(Sjson+'');
+            res.write(Sjson);
+
+            res.end();
+        });
+
+    });
+};
+
+exports.test= function(res,req){
+
+    var postData ="";
+    req.addListener("data",function(postDataChunk){
+        postData+=postDataChunk;
+    });
+    req.addListener("end",function(){
+
+        console.log(postData);
+
+        var options = {
+            host: MainIndex.getIP(),
+            port: MainIndex.getPORT(),
+            path: '/wm/classifier/test',
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Content-Length': postData.length
+            }
+        };
+
+
+        getrestapi.GetRestAPI(postData,options,function(Sjson){
+            res.writeHead(200,{"Content-Type":"text/plain","Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"});
+            console.log(Sjson+'');
+            res.write(Sjson);
+
+            res.end();
+        });
+
+    });
+};
+
+exports.predict= function(res,req){
+
+    var postData ="";
+    req.addListener("data",function(postDataChunk){
+        postData+=postDataChunk;
+    });
+    req.addListener("end",function(){
+
+
+        var json=JSON.parse(postData)
+        var realPath='/wm/classifier/predict/'+json.domain;
+        console.log(realPath);
+        var options = {
+            host: MainIndex.getIP(),
+            port: MainIndex.getPORT(),
+            path: realPath,
+            method: 'PUT',
+            headers:{
+                'Content-Type': 'text/plain',
+                'Content-Length': 0
+            }
+        };
+
+        getrestapi.GetRestAPI(null,options,function(Sjson){
+            res.writeHead(200,{"Content-Type":"text/plain","Access-Control-Allow-Origin":"*","Cache-Control":"no-cache"});
+            console.log(Sjson+'');
+            res.write(Sjson);
+            res.end();
+        });
+
+    });
+};
 
 
 

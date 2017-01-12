@@ -656,6 +656,30 @@ function ManageDNSFilter(){
 	
 }
 
+function Classifier() {
+    resetcontent();
+    var xhr=getXMLHttpRequest();
+    xhr.open("GET","/classifier.html",true);
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+                document.getElementById("headertitle").innerHTML="SDN: 域名分类器";
+                //alert(xhr.responseText);
+                //ManageFlow();
+                //alert("test");
+
+                document.getElementById("formdiv").innerHTML=xhr.responseText;
+                // FillEnableList();
+                // getDNSRedirectIP();
+                // FillFilterHostList();
+                // FillFilterHostMacList();
+            }
+        }
+    };
+    xhr.send();
+
+}
+
 //获取开启DNSfilter功能的switch列表
 function FillEnableList(){
 	var xhr=getXMLHttpRequest();
@@ -722,12 +746,12 @@ function FillDisableList(enablelist){
 function SubblacklistForm() {
 	var xhr=getXMLHttpRequest();
 	var newblack=new Object();
-	if(document.blackdomain.domain.value=="")
+	if(document.blackdomain.domain1.value=="")
 	{
 		alert("DomainName cannot be empty");
 		return;
 	}
-	newblack.domainname=document.blackdomain.domain.value;
+	newblack.domainname=document.blackdomain.domain1.value;
 	
 	var ratio=document.getElementsByName("domain_action");
 	for(var i=0;i<ratio.length;i++)
@@ -755,12 +779,12 @@ function SubblacklistForm() {
 function SubwhitelistForm() {
 	var xhr=getXMLHttpRequest();
 	var newwhite=new Object();
-	if(document.whitedomain.domain.value=="")
+	if(document.whitedomain.domain2.value=="")
 	{
 		alert("DomainName cannot be empty");
 		return;
 	}
-	newwhite.domainname=document.whitedomain.domain.value;
+	newwhite.domainname=document.whitedomain.domain2.value;
 	
 	var ratio=document.getElementsByName("domain_action");
 	for(var i=0;i<ratio.length;i++)
@@ -1024,3 +1048,119 @@ function setfilterhostmac(host_mac,action){
 		xhr.send(JSON.stringify(json));
 }
 
+function SubExtractFeatureForm() {
+    var xhr=getXMLHttpRequest();
+    var newfeature=new Object();
+    if(document.feature.sourcefile.value=="")
+    {
+        alert("filename cannot be empty");
+        return;
+    }
+    newfeature.sourcefile=document.feature.sourcefile.value;
+    console.log(newfeature);
+
+    var ratio1=document.getElementsByName("feature_type");
+    var ratio2=document.getElementsByName("feature_label");
+    for(var i=0;i<ratio1.length;i++)
+        if(ratio1[i].checked)
+        {
+            newfeature.type=ratio1[i].value;
+            break;
+        }
+    for(var i=0;i<ratio2.length;i++)
+        if(ratio2[i].checked)
+        {
+            newfeature.label=ratio2[i].value;
+            break;
+        }
+
+    var xhr=getXMLHttpRequest();
+    xhr.open("POST","/feature",true);
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+                var json=JSON.parse(xhr.responseText);
+                alert(json.details);
+                Classifier();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(newfeature));
+
+}
+
+function SubTrainForm() {
+    var xhr=getXMLHttpRequest();
+    var newtrain=new Object();
+    if(document.train.trainfile.value=="")
+    {
+        alert("filename cannot be empty");
+        return;
+    }
+    newtrain.trainfile=document.train.trainfile.value;
+
+    var xhr=getXMLHttpRequest();
+    xhr.open("POST","/train",true);
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+                var json=JSON.parse(xhr.responseText);
+                alert(json.details);
+                Classifier();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(newtrain));
+
+}
+
+function SubTestForm() {
+    var xhr=getXMLHttpRequest();
+    var newtest=new Object();
+    if(document.test.testfile.value=="" || document.test.modelfile.value=="" )
+    {
+        alert("filename cannot be empty");
+        return;
+    }
+    newtest.testfile=document.test.testfile.value;
+    newtest.modelfile=document.test.modelfile.value;
+
+    var xhr=getXMLHttpRequest();
+    xhr.open("POST","/test",true);
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+                var json=JSON.parse(xhr.responseText);
+                alert(json.details);
+               Classifier();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(newtest));
+
+}
+
+function SubPredictForm() {
+    var xhr=getXMLHttpRequest();
+    var newpredict=new Object();
+    if(document.predict.domain.value=="" )
+    {
+        alert("domainname cannot be empty");
+        return;
+    }
+    newpredict.domain=document.predict.domain.value;
+
+    var xhr=getXMLHttpRequest();
+    xhr.open("POST","/predict",true);
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+                var json=JSON.parse(xhr.responseText);
+                alert(json.details);
+                Classifier();
+            }
+        }
+    };
+    xhr.send(JSON.stringify(newpredict));
+
+}

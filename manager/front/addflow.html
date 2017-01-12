@@ -15,7 +15,7 @@
 	<li>Src_MAC:<input type="text" id="src_mac" name="src_mac" disabled="true">
 	Dst_MAC:<input type="text" id="dst_mac" name="dst_mac" disabled="true"></li>
 	</ul>
-	<input type="checkbox"  id="port_base"  name="port_base" onchange=ActiveInput(this.id,"inport","inport")>PORT_base<br/>
+	<input type="checkbox"  id="port_base"  name="port_base" onchange=ActiveInput(this.id,"inport","inport")>基于PORT<br/>
 	<ul>
 	<li>In_port:<input type="number" id="inport" name="inport" disabled="true"></li>
 	</ul>
@@ -30,9 +30,9 @@
 	<li><input type="radio" id="UDP" name="protocol" value="UDP" disabled="true" onchange=ActivePortInput()>UDP 
 	udp_src: <input type="number" id="udp_src" name="udp_src" disabled="true">
 	udp_dst: <input type="number" id="udp_dst" name="udp_dst" disabled="true"></li>
-	</ul>
+	</ul><br/>
 	IdleTimeout <input type="number" name="idletimeout">
-	HardTimeout <input type="number" name="hardtimeout"><br/>
+	HardTimeout <input type="number" name="hardtimeout"><br/><br/>
 	Actions: 
 	<input type="radio" id="drop"  name="actions" value="drop" checked onchange=ActiveInput("out_port","out_port_n","out_port_n")>drop
 	<input type="radio" id="flood" name="actions" value="flood" onchange=ActiveInput("out_port","out_port_n","out_port_n")>flood

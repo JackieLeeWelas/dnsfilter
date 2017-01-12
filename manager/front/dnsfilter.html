@@ -2,26 +2,26 @@
 <div style="float:left;width:500px" >
 <form id="blackdomain" name="blackdomain">
 	<h2>域名黑名单</h2>
-	域名 : <input id="domain" type="text" name="domain"><br/>
+	域名 : <input id="domain1" type="text" name="domain1"><br/>
 	动作 :
 	<input type="radio" name="domain_action" checked value="search">查询
 	<input type="radio" name="domain_action" value="add">增加
 	<input type="radio" name="domain_action" value="remove">移除
 	
-	<input id="subform" type="Button" value="确定" onclick=SubblacklistForm();><br/>
+	<input id="blackdomainsubform" type="Button" value="确定" onclick=SubblacklistForm();><br/>
 </form>
 </div>
 
 <div style="float:left;width:800px" >
 <form id="whitedomain" name="whitedomain">
 	<h2>域名白名单</h2>
-	域名 : <input id="domain" type="text" name="domain"><br/>
+	域名 : <input id="domain2" type="text" name="domain2"><br/>
 	动作 :
 	<input type="radio" name="domain_action" checked value="search">查询
 	<input type="radio" name="domain_action" value="add">增加
 	<input type="radio" name="domain_action" value="remove">移除
-	
-	<input id="subform" type="Button" value="确定" onclick=SubwhitelistForm();><br/><br/>
+
+	<input id="whitedomainsubform" type="Button" value="确定" onclick=SubwhitelistForm();><br/><br/>
 </form>
 </div>
 <br/><br/>

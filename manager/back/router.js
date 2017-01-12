@@ -27,7 +27,6 @@ exports.router =function(res,req,pathname){
 	case "/getswfilterset":
 	case "/getdnsredirectip":
 	case "/gethostfilterset":
-        case "/gethostmacfilterset":
 		getinfo.getinfo(res,req,pathname);
 	break;
 	case "/deletestaticflow":
@@ -54,6 +53,19 @@ exports.router =function(res,req,pathname){
 	case "/setdnsredirectip":
 		getinfo.setdnsredirect(res,req);
 	break;
+	case "/feature":
+		getinfo.feature(res,req);
+	break;
+	case "/train":
+		getinfo.train(res,req);
+	break;
+	case "/test":
+		getinfo.test(res,req);
+	break;
+	case "/predict":
+		getinfo.predict(res,req);
+    break;
+
 	default:
 		dealWithStatic(pathname,res);
 	}
