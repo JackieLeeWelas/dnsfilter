@@ -7,7 +7,7 @@
             <input id="sourcefile" type="text" name="sourcefile"/>
             <input type="button" value="浏览" OnClick="document.getElementById('fileselect1').click();"/>
             <input id="fileselect1" type="file" style="display:none;"
-                   OnChange="document.getElementById('sourcefile').value = './data/'+(this.value);"/><br/>
+                   OnChange="document.getElementById('sourcefile').value ='./data/'+this.value;"/><br/>
 
             数据类型：
             <input type="radio" name="feature_type" checked value="train">训练数据
@@ -16,12 +16,13 @@
             <input type="radio" name="feature_label" checked value="1">恶意(1)
             <input type="radio" name="feature_label" value="-1">良性(-1)<br/>
 
-            <input id="featuresubform" type="Button" value="确定" onclick=SubExtractFeatureForm();><br/>
+            <input id="featuresubform" type="Button" value="确定"
+                   onclick="alert('正在提取特征，请耐心等待。。。');SubExtractFeatureForm();"><br/>
         </form>
 
         <form id="train" name="train">
             <h2>训练</h2>
-            特征文件 :
+            训练特征：
             <input id="trainfile" type="text" name="trainfile" value="./data/train.vector"
                    onFocus="if(value==defaultValue){value=''};this.style.color='#000'"
                    onBlur="if(!value){value=defaultValue; this.style.color='#999'}" style="color:#999"/>
@@ -29,12 +30,15 @@
             <input type="button" value="浏览" OnClick="document.getElementById('fileselect2').click();"/>
             <input id="fileselect2" type="file" style="display:none;"
                    OnChange="document.getElementById('trainfile').value = './data/'+(this.value);document.getElementById('trainfile').style.color='#000'"/><br/>
-            <input id="trainsubform" type="Button" value="确定" onclick=SubTrainForm();><br/>
+            训练参数：
+            <input id="targs" type="text" name="targs" disabled="true"/>
+            <input type="checkbox"  id="argsenable"  name="argsenable" onchange=ActiveInput(this.id,"targs","targs")><br/>
+            <input id="trainsubform" type="Button" value="确定" onclick=alert('正在训练，请耐心等待。。。');SubTrainForm();><br/>
         </form>
 
         <form id="test" name="test">
             <h2>测试</h2>
-            测试文件 :
+            测试特征 :
             <input id="testfile" type="text" name="testfile" value="./data/test.vector"
                    onFocus="if(value==defaultValue){value=''};this.style.color='#000'"
                    onBlur="if(!value){value=defaultValue; this.style.color='#999'}" style="color:#999"/>
@@ -50,14 +54,15 @@
             <input id="fileselect4" type="file" style="display:none;"
                    OnChange="document.getElementById('modelfile').value = './data/'+(this.value);document.getElementById('modelfile').style.color='#000'"/><br/>
 
-            <input id="testsubform" type="Button" value="确定" onclick=SubTestForm();><br/>
+            测试参数：
+            <input id="pargs" type="text" name="pargs" disabled="true"/>
+            <input type="checkbox"  id="prgsenable"  name="argsenable" onchange=ActiveInput(this.id,"pargs","pargs")><br/>
+            <input id="testsubform" type="Button" value="确定" onclick=alert('正在训练，请耐心等待。。。');SubTestForm();><br/>
         </form>
-    </div>
 
-    <div style="float:left;width:1300px" >
         <form id="predict" name="predict">
             <h2>预测</h2>
-            待预测域名 : <input id="domain" type="text" name="domain" ><br/>
+            待测域名 : <input id="domain" type="text" name="domain"><br/>
 
             <input id="predictsubform" type="Button" value="确定" onclick=SubPredictForm();><br/>
         </form>

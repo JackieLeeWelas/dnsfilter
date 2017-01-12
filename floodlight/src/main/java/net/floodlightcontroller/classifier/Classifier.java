@@ -1,17 +1,13 @@
 package net.floodlightcontroller.classifier;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
-import java.util.Formatter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
+import org.apache.commons.lang.ArrayUtils;
 import org.projectfloodlight.openflow.protocol.OFMessage;
 import org.projectfloodlight.openflow.protocol.OFType;
 
@@ -103,9 +99,9 @@ public class Classifier implements IFloodlightModule, IOFMessageListener,
 		File tempFile = new File(domainfile.trim());
 		String featurefile = null;
 		if (type.equals("train")) {
-			featurefile = tempFile.getParent() + "/train.vector";
+			featurefile = tempFile.getParent() + "/train.vector"; //用作训练的数据提取的特征向量
 		} else if (type.equals("test")) {
-			featurefile = tempFile.getParent() + "/test.vector";
+			featurefile = tempFile.getParent() + "/test.vector";  //用作测试的数据提取的特征向量
 		} else {
 			return null;
 		}
@@ -117,17 +113,17 @@ public class Classifier implements IFloodlightModule, IOFMessageListener,
 	 * 训练
 	 */
 	@Override
-	public String train(String trainfile) {
+	public String train(String trainfile,String[]args) {
 		// TODO Auto-generated method stub
 		File tempFile = new File(trainfile.trim());
 		String modelfile = tempFile.getParent() + "/train.model";
-		String[] arg = { "-h", "0", "-v", "5", trainfile, // 存放SVM训练模型用的数据的路径
+		String[] targs = { trainfile, // 存放SVM训练模型用的数据的路径
 				modelfile }; // 存放SVM通过训练数据训练出来的模型的路径
-
+		targs = (String[])ArrayUtils.addAll(args, targs);
 		System.out.println("........SVM train begin..........");
 		try {
 
-			Svm_train.main(arg); // 训练
+			Svm_train.main(targs); // 训练
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();
@@ -142,15 +138,16 @@ public class Classifier implements IFloodlightModule, IOFMessageListener,
 	 * 测试
 	 */
 	@Override
-	public String test(String testfile, String modelfile) {
+	public String test(String testfile, String modelfile,String[] args) {
 		// TODO Auto-generated method stub
 		File tempFile = new File(testfile.trim());
 		String resultfile = tempFile.getParent() + "/test.result";
-		String[] parg = { testfile, // 存放测试数据
+		String[] pargs = { testfile, // 存放测试数据
 				modelfile, // 调用的是训练以后的模型
 				resultfile }; // 生成结果的文件的路径
+		pargs = (String[])ArrayUtils.addAll(args, pargs);
 		try {
-			Svm_predict.main(parg); // 预测
+			Svm_predict.main(pargs); // 预测
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			// e.printStackTrace();

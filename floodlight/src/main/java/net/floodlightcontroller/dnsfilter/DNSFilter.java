@@ -204,26 +204,29 @@ public class DNSFilter implements IFloodlightModule, IOFMessageListener,IDNSFilt
 	            {
 	      
 	            	DNS dns_pkt=(DNS)udp_pkt.getPayload();
+	            	String query_name = dns_pkt.toString();
+	            	if(query_name.contains("in-addr.arpa"))
+	            		return Command.CONTINUE;
 	            	String src2dst=" from "+src.toString()+":"+src_p.toString()+
 	            			" to "+dst.toString()+":"+dst_p.toString()+
 	            			" seen on switch: "+sw.getId();           			            	
-            		logger.info("DNS packet  {},queryname:{} ",src2dst,dns_pkt.toString());
-            		logger.info("blacklist has:{}",blacklist.has(dns_pkt.toString()));
-            		logger.info("whitelist has:{}",whitelist.has(dns_pkt.toString()));
+            		logger.info("DNS packet  {},queryname:{} ",src2dst,query_name);
+            		logger.info("blacklist has:{}",blacklist.has(query_name));
+            		logger.info("whitelist has:{}",whitelist.has(query_name));
             		
             		// 不检查去往DNS 重定向服务的数据包
             		if(dst.equals(this.DNSRedirectIp)||src.equals(this.DNSRedirectIp))
             			return Command.CONTINUE;
             		
             		//检查该DNS请求的域名是否在黑名单中，
-            		if(blacklist.has(dns_pkt.toString())){
+            		if(blacklist.has(query_name)){
             			//处理恶意域名
             			processMaliciousDomain(sw,pi,cntx,decision,src,dst,dns_pkt.toString(),src_p,dst_p);
             		}
-            		else if(whitelist.has(dns_pkt.toString())){//域名在白名单中
+            		else if(whitelist.has(query_name)){//域名在白名单中
             			return Command.CONTINUE;
             		}else{   //不在黑白名单的域名，根据分类器分类结果处理
-            			double result = classifier.predict(dns_pkt.toString());
+            			double result = classifier.predict(query_name);
             			if( result > 0) { //malicious domain name
             				processMaliciousDomain(sw,pi,cntx,decision,src,dst,dns_pkt.toString(),src_p,dst_p);
             			}else{

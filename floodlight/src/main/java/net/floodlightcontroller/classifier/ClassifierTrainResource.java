@@ -22,12 +22,17 @@ public class ClassifierTrainResource extends ClassifierResourceBase {
 	
 	@Post
     public String handlePost(String json) {
-		Map<String, String> filename;
+		Map<String, String> trainargs;
 		try {
 			IClassifierService classifier=this.getClassifierService();
-			filename=this.jsonToFileEntry(json);
-			String trainfile =filename.get("trainfile").toString();
-			String modelfile = classifier.train(trainfile);
+			trainargs=this.jsonToFileEntry(json);
+			String trainfile =trainargs.get("trainfile").toString();
+			String[] targs = null;
+			if(trainargs.get("targs") != null){
+				targs = trainargs.get("targs").split(" "); //参数之间以空格分隔
+			}
+			
+			String modelfile = classifier.train(trainfile,targs);
 			if( modelfile != null){
 				return "{\"status\" : \"success\", \"details\" : \"SVM train model is saved in " + modelfile + "\"}";
 			}else{
@@ -66,6 +71,9 @@ public class ClassifierTrainResource extends ClassifierResourceBase {
 			switch (n) {
 				case "trainfile":
 					entry.put("trainfile", jp.getText());
+					break;
+				case "targs":
+					entry.put("targs", jp.getText());
 					break;
 				default:
 					throw new IOException("UnExpected FIELD_NAME"); 

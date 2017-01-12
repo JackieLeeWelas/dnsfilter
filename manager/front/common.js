@@ -1098,7 +1098,7 @@ function SubTrainForm() {
         return;
     }
     newtrain.trainfile=document.train.trainfile.value;
-
+    newtrain.targs =document.train.targs.value;
     var xhr=getXMLHttpRequest();
     xhr.open("POST","/train",true);
     xhr.onreadystatechange=function(){
@@ -1124,6 +1124,7 @@ function SubTestForm() {
     }
     newtest.testfile=document.test.testfile.value;
     newtest.modelfile=document.test.modelfile.value;
+    newtest.pargs=document.test.pargs.value;
 
     var xhr=getXMLHttpRequest();
     xhr.open("POST","/test",true);

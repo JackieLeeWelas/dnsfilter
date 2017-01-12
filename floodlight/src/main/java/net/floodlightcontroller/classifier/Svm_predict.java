@@ -66,6 +66,7 @@ class Svm_predict {
 				output.writeBytes("\n");
 			}
 		}
+		int count = 1;
 		while(true)
 		{
 			String line = input.readLine();
@@ -100,11 +101,11 @@ class Svm_predict {
 
 			if(v == target){
 				++correct;
-				LogUtil.log("the domain is prediced as "+ (v>0?"malicious":"benign")+" and is correct ...");
+				LogUtil.log(count++ + ":the domain is prediced as "+ (v>0?"malicious":"benign")+" and is correct ...");
 			}else{
-				LogUtil.log("the domain is prediced as "+ (v>0?"malicious":"benign")+" and is wrong !!!");
+				LogUtil.log(count++ + ":the domain is prediced as "+ (v>0?"malicious":"benign")+" and is wrong !!!");
 			}
-				
+			
 			error += (v-target)*(v-target);
 			sumv += v;
 			sumy += target;

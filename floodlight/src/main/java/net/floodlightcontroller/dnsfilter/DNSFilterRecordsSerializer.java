@@ -21,7 +21,6 @@ public class DNSFilterRecordsSerializer extends JsonSerializer<DNSFilterRecords>
 		 jGen.writeStringField("queryname",record.queryname);
 		 jGen.writeEndObject();
 		
-		
 	}
 
 }

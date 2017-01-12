@@ -21,14 +21,18 @@ public class ClassifierTestResource extends ClassifierResourceBase {
 
 	@Post
     public String handlePost(String json) {
-		Map<String, String> filename;
+		Map<String, String> testargs;
 		try {
 			IClassifierService classifier=this.getClassifierService();
-			filename=this.jsonToFileEntry(json);
-			String testfile =filename.get("testfile").toString();
-			String modelfile =filename.get("modelfile").toString();
-			//String resultfile =filename.get("resultfile").toString();
-			String resultfile = classifier.test(testfile, modelfile);
+			testargs=this.jsonToFileEntry(json);
+			String testfile =testargs.get("testfile").toString();
+			String modelfile =testargs.get("modelfile").toString();
+			
+			String[] pargs = null;
+			if(testargs.get("pargs") != ""){
+				pargs = testargs.get("pargs").split(" "); //参数之间以空格分隔
+			}
+			String resultfile = classifier.test(testfile, modelfile,pargs);
 			if(resultfile != null){
 				return "{\"status\" : \"success\", \"details\" : \"SVM test result is saved in" + resultfile + "\"}";
 			}else{
@@ -71,9 +75,9 @@ public class ClassifierTestResource extends ClassifierResourceBase {
 				case "modelfile":
 					entry.put("modelfile", jp.getText());
 					break;
-//				case "resultfile":
-//					entry.put("resultfile", jp.getText());
-//					break;
+				case "pargs":
+					entry.put("pargs", jp.getText());
+					break;
 				default:
 					throw new IOException("UnExpected FIELD_NAME"); 
 			}
